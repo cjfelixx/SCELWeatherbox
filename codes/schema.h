@@ -1,5 +1,5 @@
 /* File: schema.h */
-
+//need to include the structs for the bme 280, and sunlight grove sensor//
 /* External Library */
 #include <stdint.h>
 
@@ -13,10 +13,8 @@ typedef struct {
     uint32_t uptime_ms;   // Time since start of program
     uint16_t batt_mv[6]; // Battery Voltage (in milli volts)
     uint16_t panel_mv[6];  // Panel Voltage (in milli volts)
-    uint32_t bmp085_press_pa; // Pressure Value (in pascals)
-    int16_t dallas_roof_c;   // temperature value (celcius)
-    uint16_t humidity_centi_pct; //Humidity Value
-    uint16_t apogee_w_m2[20]; // Solar Irradiance Value
+    bme 280
+    sunlight grove sensor 
     
 } schema_1;
 
