@@ -9,20 +9,26 @@
 /* Set pins */
 OneWire oneWire(PIN_ROOF_TEMP);              /* Temperature pins and objects */
 DallasTemperature dallas_roof_sen(&oneWire);
-SHT1x sht1x(PIN_HUMID_DATA, PIN_HUMID_CLK);
-Adafruit_BMP085 bmp085;                       /* Pressure object */
+Adafruit_BME280 Adafruit_BME280(PIN_HUMID_DATA, PIN_HUMID_CLK);
+Adafruit_BME280 pressure;        /* pressure object*/ 
+Adafruit_BME280 temperature;     /* temp object*/
+Adafruit_BME280 humidity;       /* humidity object */
 
 
 /* Initialization */
 void sensor_init(void)
 {
- bmp085.begin();      
+ Adafruit_BME280.begin();      
 }
 
 /* Humidity */
 long sensorHumidity(void)
 {
-    long value = sht1x.readHumidity();
+    long value = Adafruit_BME280.readHumidity();
+    return value;
+    long value = Adafruit_BME280.readPressure();
+    return value;
+    long value = Adafruit_BME280.readTemperature();
     return value;
 }
 
