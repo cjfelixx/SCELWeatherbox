@@ -1,6 +1,7 @@
 /*Internal Libraries*/
 #include "sensors.h"
 #include "config.h"
+#include "SI114X.h"
 
 /*Objects*/
 Adafruit_BME280 bme;
