@@ -3,11 +3,10 @@
 #include "config.h"
 
 /*Objects*/
-SHT1x sht1x(H_DATA_PIN, H_CLK_PIN);
 Adafruit_BME280 bme;
 
 void sensor_init(void){
-   bme280.begin();
+   bme.begin();
 }
 
 /*Humidity*/
@@ -27,8 +26,8 @@ long sTemperature(void){
 
 /*Solar Irradiance*/
 long sSolIrrad(void){
-  long val = analogRead(APOGEE_PIN)*(5000.0/1023);
-  return (val/2) //check datasheet for this calc
+  long val = SI1145.ReadVisible();
+  return (val) //check datasheet for this calc
 }
 
 /*Battery*/
