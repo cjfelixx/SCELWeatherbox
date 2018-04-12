@@ -4,6 +4,7 @@
 
 /*Objects*/
 Adafruit_BME280 bme;
+SI114X SI1145 = SI114X();
 
 void sensor_init(void){
    bme.begin();
