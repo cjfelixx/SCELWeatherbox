@@ -1,69 +1,45 @@
-/*  File: sensors.cpp
-    Function definitions for sensors
-*/
-
-/* Libraries */
-#include "sensor.h"
+/*Internal Libraries*/
+#include "sensors.h"
 #include "config.h"
 
-/* Set pins */
-OneWire oneWire(PIN_ROOF_TEMP);              /* Temperature pins and objects */
-DallasTemperature dallas_roof_sen(&oneWire);
-Adafruit_BME280 Adafruit_BME280(PIN_HUMID_DATA, PIN_HUMID_CLK);
-Adafruit_BME280 pressure;        /* pressure object*/ 
-Adafruit_BME280 temperature;     /* temp object*/
-Adafruit_BME280 humidity;       /* humidity object */
+/*Objects*/
+Adafruit_BME280 bme;
 
-
-/* Initialization */
-void sensor_init(void)
-{
- Adafruit_BME280.begin();      
+void sensor_init(void){
+   bme.begin();
 }
 
-/* Humidity */
-long sensorHumidity(void)
-{
-    long value = Adafruit_BME280.readHumidity();
-    return value;
-    long value = Adafruit_BME280.readPressure();
-    return value;
-    long value = Adafruit_BME280.readTemperature();
-    return value;
+/*Humidity*/
+long sHumidity(void){
+  long val = bme.readHumidity();
 }
 
-/* Pressure */
-long sensorPressure(void)
-{
-    long value =  bmp085.readPressure();
-    return value; 
+/*Pressure*/
+long sPressure(void){
+  long val = bme.readPressure();
 }
 
-/* Temperature Sensor */
-long sensorRoofTempdecic(void)      
-{
-    long value =  0;
-    dallas_roof_sen.requestTemperatures();
-    value = dallas_roof_sen.getTempCByIndex(0);
-    return value;
+/*Temperature*/
+long sTemperature(void){
+  long val = bme.readTemperature();
 }
 
-/*Solar Irradiance */
-long sensorSolarIrrd(void)
-{
-  long sensorValue = analogRead(PIN_APOGEE_V) * 5000.0/1023;
-  return sensorValue* 0.5;
+/*Solar Irradiance*/
+long sSolIrrad(void){
+  long val = SI1145.ReadVisible();
+  return (val) //check datasheet for this calc
 }
 
+/*Battery*/
+long battStatus(void){
+  long val = analogRead(BATT_PIN)*(5000.0/1023);
+  return val;
+}
 
-
-
-
-/*Battery */
-long sensorBattery(void)
-{
-    long value = analogRead(PIN_BATT_V)*5000.0/1023;
-    return value;
+/*SOLAR PANEL*/
+long panelStatus(void){
+  long val = 2 * (analogRead(PANEL_PIN)*(5000.0/1023);
+  return val;
 }
 
 
