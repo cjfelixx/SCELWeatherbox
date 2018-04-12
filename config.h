@@ -1,12 +1,11 @@
-/*HUMIDITY*/
-#define H_CLK_PIN 11
-#define H_DATA_PIN 10
-
-/*SOLAR IRRADIANCE*/
+/*sunlight grove sensor*/
 #define APOGEE_PIN A2
 
-/*TEMPERATURE*/
-#define TEMP_PIN 3
+/*BME 280~ humidity temp pressure*/
+#define BME_SCK 13
+#define BME_MISO 12
+#define BME_MOSI 11
+ #define  BME_CS 10
 
 /*PANEL VOLTAGE */
 #define PANEL_PIN A1
@@ -22,7 +21,3 @@
 /* Receiver/Transmitter */
 #define PIN_RX 0
 #define PIN_TX 1
-
-/* I2C/Pressure */
-#define _PIN_SDA A4
-#define _PIN_SCL A5
