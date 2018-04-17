@@ -1,54 +1,42 @@
-/*Internal Libraries*/
-#include "sensors.h"
+/* File: weatherbox.ino */
+/* The main driver for the weatherbox */
+
+
+/* Libraries */
 #include "config.h"
+#include "sensors.h"
+#include "transmit.h"
+#include "schema.h"
+#include "routine.h"
 #include "SI114X.h"
 
-/*Objects*/
-Adafruit_BME280 bme;
-SI114X SI1145 = SI114X();
+/* External Libraries */
+#include <OneWire.h>
+#include <Adafruit_BME280.h>
+#include <Adafruit_Sensor.h>
+#include <XBee.h>
 
-void sensor_init(void){
-   bme.begin();
-}
+/* Global Variables for Packet */
+schema_1 Gpacket;
 
-/*Humidity*/
-long sHumidity(void){
-  long val = bme.readHumidity();
-}
+/* Global Xbee object */
+XBee Gxbee = XBee();
 
-/*Pressure*/
-long sPressure(void){
-  long val = bme.readPressure();
-}
+/* Global count variable */
+int G_count = 0;
 
-/*Temperature*/
-long sTemperature(void){
-  long val = bme.readTemperature();
-}
+void setup() {
 
-/*Solar Irradiance*/
-long sSolIrrad(void){
-  long val = SI1145.ReadVisible();
-  return (val) //check datasheet for this calc
-}
+    /* Initialization */
+    sensor_init();
+    Serial.begin(9600);
+    Gxbee.begin(Serial); 
 
-/*Battery*/
-long battStatus(void){
-  long val = analogRead(BATT_PIN)*(5000.0/1023);
-  return val;
-}
-
-/*SOLAR PANEL*/
-long panelStatus(void){
-  long val = 2 * (analogRead(PANEL_PIN)*(5000.0/1023);
-  return val;
+    /*Packet Initialization */
+    clear_Packet();
 }
 
 
-/* Solar Panel */
-/* Times 2 to account for voltage divider, add 700 to account for voltage drop across diode on charging chip. */ 
-long sensorPanelmV(void)
-{
-    long value = 2*analogRead(PIN_SOLAR_V)*5000.0/1023;
-    return value;
-}
+void loop() {
+    routine(&G_count);
+}     
