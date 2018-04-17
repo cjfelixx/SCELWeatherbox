@@ -3,7 +3,7 @@
 /* Libraries */
 #include "schema.h"
 #include "config.h"
-#include "sensor.h"
+#include "sensors.h"
 
 /* External Libraries */
 #include <EEPROM.h>
