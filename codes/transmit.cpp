@@ -88,8 +88,8 @@ void construct_Packet(int Gcount) {
   Humidity = sHumidity();
   Pressure = sPressure();
   Temperature = sTemperature();
-  Gpacket.bmp085_Press = Pressure;
-  Gpacket.bme208_Humid = Humidity;
+  Gpacket.bme280_Press = Pressure;
+  Gpacket.bme280_Humid = Humidity;
   Gpacket.bme280_Temp = Temperature;
     
   /*Update uptime */
