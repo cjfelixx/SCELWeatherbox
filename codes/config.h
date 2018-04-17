@@ -10,9 +10,6 @@
 #define BME_MOSI 11
  #define  BME_CS 10 
 
-/* Solar Irradiance */
-#define PIN_APOGEE_V A2
-
 /* Panel and Battery Voltage */
 #define PIN_SOLAR_V A1
 #define PIN_BATT_V A3
