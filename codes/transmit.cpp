@@ -23,11 +23,10 @@ void clear_Packet(void) {
   int i,j,k;
 
   /* Clear/init values in packet */
-  Gpacket.address = EEPROM.read(2) | (EEPROM.read(3) << 8);;
+ // Gpacket.address = EEPROM.read(2) | (EEPROM.read(3) << 8);;
   Gpacket.uptime_ms = 0;
-  Gpacket.bmp085_press_pa = 0;
-  Gpacket.humidity_centi_pct = 0;
-  Gpacket.dallas_roof_c = 0;
+  Gpacket.bme_280 = 0;
+  Gpacket.sunlight_grove_sensor = 0;
 
   /* Clear/init values with multiple points */ 
   for(i = 0 ; i < 60; i++){
@@ -38,7 +37,6 @@ void clear_Packet(void) {
     Gpacket.batt_mv[j] = 0;
     Gpacket.panel_mv[j] = 0;
     /* Polled every 3 seconds */
-    Gpacket.apogee_w_m2[k] = 0;
   }
 
   #ifdef DEBUG
@@ -67,32 +65,32 @@ void construct_Packet(int Gcount) {
   
   /* Initialize  Sensor Variables */
   long BatterymV = 0;
-  long SolarIrrmV = 0;
-  long SolarIrr_w_m2 = 0;
-  long Humiditypct = 0;
+ // long SolarIrrmV = 0;
+  //long SolarIrr_w_m2 = 0;
+  long Humidity = 0;
   long PanelmV = 0;
-  long Pressurepa = 0;
-  long Tempdecic = 0;
-  long Dallas_RoofTemp_c = 0;
+  long Pressure = 0;
+  long Temperature = 0;
+  long SolarIrrad = 0;
   unsigned long uptime;
 
   /* Get Polling Sensor Data */ 
-  BatterymV = sensorBattery();
-  PanelmV = sensorPanelmV();
-  SolarIrrmV = sensorSolarIrrd();
+  BatterymV = battStatus();
+  PanelmV = panelStatus();
+  SolarIrrad = sSolIrrad();
     
   /* Pack Polling Data */
   Gpacket.panel_mv[i/10] = PanelmV;
   Gpacket.batt_mv[i/10] = BatterymV;
-  Gpacket.apogee_w_m2[i/3] = SolarIrrmV;
+		 // Gpacket.apogee_w_m2[i/3] = SolarIrrmV;
     
   /* Get and Pack Non-Polling Data */
-  Humiditypct = sensorHumidity();
-  Pressurepa = sensorPressure();
-  Tempdecic = sensorRoofTempdecic();
-  Gpacket.bmp085_press_pa = Pressurepa;
-  Gpacket.humidity_centi_pct = Humiditypct;
-  Gpacket.dallas_roof_c = Tempdecic;
+  Humidity = sHumidity();
+  Pressure = sPressure();
+  Temperature = sTemperature();
+  Gpacket.bmp085_Press = Pressure;
+  Gpacket.bme208_Humid = Humidity;
+  Gpacket.bme280_Temp = Temperature;
     
   /*Update uptime */
   uptime = millis();
@@ -105,13 +103,13 @@ void construct_Packet(int Gcount) {
   Serial.print("\nBatterymV Data:");
   Serial.println(BatterymV);
   Serial.print("\nSolarIrrmV Data:");
-  Serial.println(SolarIrrmV);
+  Serial.println(SolarIrrad);
   Serial.print("\nHumiditypct Data:");
-  Serial.println(Humiditypct);
+  Serial.println(Humidity);
   Serial.print("\nPressurepa Data:");
-  Serial.println(Pressurepa);
+  Serial.println(Pressure);
   Serial.print("\nRoofTempdecic Data:");
-  Serial.println(Tempdecic);
+  Serial.println(Temperature);
   Serial.print("End:con\n");
   #endif
 }
@@ -161,10 +159,10 @@ void construct_Test(void){
   /* Hard-coded data to put into packet */
   long batt_mv_raw = 1;
   long panel_mv_raw = 2;
-  long apogee_raw = 3;
+  long sunlight_raw = 3;
   long pressure_raw = 4;
   long humidity_raw = 5;
-  long dallas_rooftemp_decic = 6;
+  long temperature_raw = 6;
   unsigned long uptime = 1000;
 
   /* Debug */
@@ -173,9 +171,9 @@ void construct_Test(void){
   /* Store values into packet */
   Gpacket.batt_mv[n/10] = batt_mv_raw;
   Gpacket.panel_mv[n/10] = panel_mv_raw;
-  Gpacket.apogee_w_m2[n/3] = apogee_raw;
-  Gpacket.bmp085_press_pa = pressure_raw;
-  Gpacket.humidity_centi_pct = humidity_raw;
+  Gpacket.sunlight_grove_sensor = sunlight_raw;
+  Gpacket.bme280_Press = pressure_raw;
+  Gpacket.bme280_Humid = humidity_raw;
   Gpacket.uptime_ms = uptime;
-  Gpacket.dallas_roof_c = dallas_rooftemp_decic;
+  Gpacket.bme280_Temp = temperature_raw;
 }
