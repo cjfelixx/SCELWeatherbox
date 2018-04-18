@@ -24,7 +24,7 @@ extern XBee Gxbee;
 void clear_Packet(void);
 
 /*Construct Packet */
-void construct_Packet(void);
+void construct_Packet(int Gcount);
 
 /* Transmit Packet */
 void transmit_Packet(void);
