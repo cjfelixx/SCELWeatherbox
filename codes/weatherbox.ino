@@ -12,7 +12,7 @@
 #include "SI114X.h"
 
 /* External Libraries */
-#include <OneWire.h>
+#include <Wire.h>
 #include <Adafruit_BME280.h>
 #include <Adafruit_Sensor.h>
 #include <XBee.h>
