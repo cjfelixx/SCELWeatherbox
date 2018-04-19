@@ -43,22 +43,14 @@ long sSolIrrad(void)
 /*Battery*/
 long battStatus(void)
 {
-  long val = analogRead(BATT_PIN)*(5000.0/1023);
+  long val = analogRead(PIN_BATT_V)*(5000.0/1023);
   return val;
 }
 
 /*SOLAR PANEL*/
+/* Times 2 to account for voltage divider, add 700 to account for voltage drop across diode on charging chip. */ 
 long panelStatus(void)
 {
-  long val = 2 * (analogRead(PANEL_PIN)*(5000.0/1023);
+  long val = 2*(analogRead(PIN_SOLAR_V)*(5000.0/1023);
   return val;
-}
-
-
-/* Solar Panel */
-/* Times 2 to account for voltage divider, add 700 to account for voltage drop across diode on charging chip. */ 
-long sensorPanelmV(void)
-{
-    long value = 2*analogRead(PIN_SOLAR_V)*5000.0/1023;
-    return value;
 }
