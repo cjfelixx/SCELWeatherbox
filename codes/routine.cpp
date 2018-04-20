@@ -36,3 +36,4 @@ void routine(int *count)
 
    /* Wait to ensure we poll exactly every second */
    while((millis() - transmit_timer) <= wait_ms);
+}
