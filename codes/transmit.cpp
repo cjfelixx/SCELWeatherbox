@@ -25,7 +25,9 @@ void clear_Packet(void) {
   /* Clear/init values in packet */
  // Gpacket.address = EEPROM.read(2) | (EEPROM.read(3) << 8);;
   Gpacket.uptime_ms = 0;
-  Gpacket.bme_280 = 0;
+  Gpacket.bme280_Press = 0;
+  Gpacket.bme280_Humid = 0;
+  Gpacket.bme280_Temp = 0;
   Gpacket.sunlight_grove_sensor = 0;
 
   /* Clear/init values with multiple points */ 
@@ -82,7 +84,6 @@ void construct_Packet(int Gcount) {
   /* Pack Polling Data */
   Gpacket.panel_mv[i/10] = PanelmV;
   Gpacket.batt_mv[i/10] = BatterymV;
-		 // Gpacket.apogee_w_m2[i/3] = SolarIrrmV;
     
   /* Get and Pack Non-Polling Data */
   Humidity = sHumidity();
@@ -151,12 +152,13 @@ void transmit_Packet(void) {
  * Returns: Nothing                                        *
  * Description: Constructs a hard coded packet for testing.*
  *                                                         *
- *                                                         *
+ *    ####still needs fixing####                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
-void construct_Test(void){
-  /* Hard-coded data to put into packet */
+/* void construct_Test(void)
+{
+   //Hard-coded data to put into packet 
   long batt_mv_raw = 1;
   long panel_mv_raw = 2;
   long sunlight_raw = 3;
@@ -165,10 +167,10 @@ void construct_Test(void){
   long temperature_raw = 6;
   unsigned long uptime = 1000;
 
-  /* Debug */
+   //Debug 
   Serial.println(F("Generating - BIN"));
 
-  /* Store values into packet */
+  // Store values into packet 
   Gpacket.batt_mv[n/10] = batt_mv_raw;
   Gpacket.panel_mv[n/10] = panel_mv_raw;
   Gpacket.sunlight_grove_sensor = sunlight_raw;
@@ -176,4 +178,4 @@ void construct_Test(void){
   Gpacket.bme280_Humid = humidity_raw;
   Gpacket.uptime_ms = uptime;
   Gpacket.bme280_Temp = temperature_raw;
-}
+} */
