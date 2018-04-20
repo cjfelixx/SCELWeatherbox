@@ -1,7 +1,7 @@
 
 /* File: weatherbox.ino */
 /* The main driver for the weatherbox */
-
+//Need to download Adafruit sensor, XBEE and Sunlight grove sensor files available on GitHub
 
 /* Libraries */
 #include "config.h"
@@ -26,7 +26,8 @@ XBee Gxbee = XBee();
 /* Global count variable */
 int G_count = 0;
 
-void setup() {
+void setup() 
+{
 
     /* Initialization */
     sensor_init();
@@ -38,6 +39,7 @@ void setup() {
 }
 
 
-void loop() {
+void loop() 
+{
     routine(&G_count);
 }
