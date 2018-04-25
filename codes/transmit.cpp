@@ -31,9 +31,10 @@ void clear_Packet(void) {
   Gpacket.sunlight_grove_sensor = 0;
 
   /* Clear/init values with multiple points */ 
-  for(i = 0 ; i < 60; i++){
-    j = i/10;
-    k = i/3;
+  for(i = 0 ; i < 60; i++)
+  {
+    j = i/10; //Resets per 10 seconds
+    k = i/3; //Resets per 3 seconds
 
     /* Polled every 10 seconds */
     Gpacket.batt_mv[j] = 0;
@@ -128,8 +129,8 @@ void transmit_Packet(void) {
   int len = 0;
 
   /* Obtain address of receiving end */
-  XBeeAddress64 addr64 = XBeeAddress64(0x0,0x0);
-    
+  XBeeAddress64 addr64 = XBeeAddress64(0x0,0x0); 
+                                     //^^^^^^^Set DL and DH in the XCTU program
   /* Packet to be transmitted */
   uint8_t payload[MAX_SIZE];
 
